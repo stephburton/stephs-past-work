@@ -1,4 +1,4 @@
-# NAT Gateway Overhaul - Shopify Financial Reporting Infrastructure
+# NAT Gateway Overhaul
 
 ### Introduction
 While I was working on Shopify's Restricted Infrastructure and Stacks team as a Production Engineer, I was tasked with overhauling the NAT gateways for our financial reporting systems. The NAT gateways allow internal resources to connect to external resources while adding an extra layer of security by "hiding" the original internal IP address of the source. This prevents potential threat actors from gaining access to the internal network, by funneling all traffic through a single point (a NAT gateway virtual machine). Both ingress and egress traffic are managed via the use of firewall rules, dictating what is allowed through the NAT gateway. This setup also allowed us to log all traffic in and out of our internal network, facilitating better monitoring of the state of our network.
@@ -17,24 +17,42 @@ Our infrastructure had three identical NAT gateways for the purpose of increased
 
 ### Technologies and Tools
 Technologies and Tools used to complete this work are as follows:
-* Google Cloud Platform: this was the cloud platform of choice for Shopify, housing all of our infrastructure.
-* Chef: used to configure and manage all VMs within our restricted infrastructure.
-* Terraform: used to manage the configuration of our infrastructure. Terraform was used in conjunction with Github to serve as documentation of work completed, as required by SOX and PCI-DSS.
-* Github: As mentioned previously Github was used in conjunction with Terraform to document our work. Github was also used for it's typical purpose: version control. When used with an internally-built tool called [ShipIt](https://shopify.engineering/introducing-shipit), Github expedited the rollback of changes should issues arise.
-* SSH: used to securely gain remote access to another VM on the network, to monitor traffic to the NAT gateways.
-* Linux commands such as `watch` and `curl`: used to monitor traffic to and from the NAT gateways, from another VM on the network.
+* __Google Cloud Platform__
+  - The cloud platform of choice for Shopify, housing all of our infrastructure.
+* __Chef__
+  - Used to configure and manage all VMs within our restricted infrastructure.
+* __Terraform__
+  - Used to manage the configuration of our infrastructure.
+  - Terraform was used in conjunction with Github to serve as documentation of work completed, as required by SOX and PCI-DSS.
+* __Github__
+  - As mentioned previously Github was used in conjunction with Terraform to document our work.
+  - Github was also used for it's typical purpose: version control.
+  - When used with an internally-built tool called [ShipIt](https://shopify.engineering/introducing-shipit), Github expedited the rollback of changes should issues arise.
+* __SSH__
+  - Used to securely gain remote access to another VM on the network, to monitor traffic to the NAT gateways.
+* __Linux commands such as `watch` and `curl`__
+  - Used to monitor traffic to and from the NAT gateways, from another VM on the network.
 
 ### Implementation
 Here is a description of my approach to completing the work described above:
-**1.** Edit the existing Terraform configuration to make the desired changes. Create a new Github pull request (PR) containing these changes. By pushing the proposed configuration changes to a new PR, I was able to have a coworker verify the changes are correct before applying. Having the work approved by another member of my team also serves to meet the requirements of the PCI-DSS standard (change controls).
-**2.** Plan the changes locally to ensure they are as expected. Post plans within the body of the previously mentioned PR, for review and approval by senior team member.
-**3.** Work on one NAT gateway VM at a time, noting the IP address of the NAT gateway. As previously mentioned, working on one NAT gateway at a time allowed me to minimize disruption ensuring high-availability of our infrastructure.
-**4.** SSH into another VM on the network and test the connection to the NAT gateway using Linux commands. Because traffic to the NAT gateways was load-balanced, I would be able to confirm all three NAT gateways were receiving traffic.
-**5.** Delete the NAT gateway VM via Google console.
-**6.** Apply the Terraform configuration changes, using targets to single out one NAT gateway VM at a time.
-**7.** Check Cloud-init log files to ensure Chef has finished successfully. Confirming Chef had finished successfully means the new NAT gateway was ready to receive traffic.
-**8.** SSH to the previously accessed VM to monitor traffic to the NAT gateways. If the IP address of the re-created NAT gateway shows up, it means the NAT gateway was re-created successfully.
-**9.** Repeat this process for each of the remaining NAT gateways.
+
+__1.__ Edit the existing Terraform configuration to make the desired changes. Create a new Github pull request (PR) containing these changes. By pushing the proposed configuration changes to a new PR, I was able to have a coworker verify the changes are correct before applying. Having the work approved by another member of my team also serves to meet the requirements of the PCI-DSS standard (change controls).
+
+__2.__ Plan the changes locally to ensure they are as expected. Post plans within the body of the previously mentioned PR, for review and approval by senior team member.
+
+__3.__ Work on one NAT gateway VM at a time, noting the IP address of the NAT gateway. As previously mentioned, working on one NAT gateway at a time allowed me to minimize disruption ensuring high-availability of our infrastructure.
+
+__4.__ SSH into another VM on the network and test the connection to the NAT gateway using Linux commands. Because traffic to the NAT gateways was load-balanced, I would be able to confirm all three NAT gateways were receiving traffic.
+
+__5.__ Delete the NAT gateway VM via Google console.
+
+__6.__ Apply the Terraform configuration changes, using targets to single out one NAT gateway VM at a time.
+
+__7.__ Check Cloud-init log files to ensure Chef has finished successfully. Confirming Chef had finished successfully means the new NAT gateway was ready to receive traffic.
+
+__8.__ SSH to the previously accessed VM to monitor traffic to the NAT gateways. If the IP address of the re-created NAT gateway shows up, it means the NAT gateway was re-created successfully.
+
+__9.__ Repeat this process for each of the remaining NAT gateways.
 
 ### Results and Impact
 Here's a breakdown of the final results:
