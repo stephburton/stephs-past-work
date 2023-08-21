@@ -1,3 +1,5 @@
+# NAT Gateway Overhaul - Shopify Financial Reporting Infrastructure
+
 ### Introduction
 While I was working on Shopify's Restricted Infrastructure and Stacks team as a Production Engineer, I was tasked with overhauling the NAT gateways for our financial reporting systems. The NAT gateways allow internal resources to connect to external resources while adding an extra layer of security by "hiding" the original internal IP address of the source. This prevents potential threat actors from gaining access to the internal network, by funneling all traffic through a single point (a NAT gateway virtual machine). Both ingress and egress traffic are managed via the use of firewall rules, dictating what is allowed through the NAT gateway. This setup also allowed us to log all traffic in and out of our internal network, facilitating better monitoring of the state of our network.
 
