@@ -20,14 +20,14 @@ Technologies and Tools used to complete this work are as follows:
 * __Google Cloud Platform__
   - The cloud platform of choice for Shopify, housing all of our infrastructure.
 * __Chef__
-  - Used to configure and manage all VMs within our restricted infrastructure.
+  - Used to configure and manage VMs within our infrastructure.
 * __Terraform__
   - Used to manage the configuration of our infrastructure.
   - Terraform was used in conjunction with Github to serve as documentation of work completed, as required by SOX and PCI-DSS.
 * __Github__
   - As mentioned previously Github was used in conjunction with Terraform to document our work.
   - Github was also used for it's typical purpose: version control.
-  - When used with an internally-built tool called [ShipIt](https://shopify.engineering/introducing-shipit), Github expedited the rollback of changes should issues arise.
+  - When used with an internally-built continuous deployment tool, Github expedited the rollback of changes should issues arise.
 * __SSH__
   - Used to securely gain remote access to another VM on the network, to monitor traffic to the NAT gateways.
 * __Linux commands such as `watch` and `curl`__
