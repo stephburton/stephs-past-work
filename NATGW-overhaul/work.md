@@ -26,15 +26,15 @@ Technologies and Tools used to complete this work are as follows:
 
 ### Implementation
 Here is a description of my approach to completing the work described above:
-1. Edit the existing Terraform configuration to make the desired changes. Create a new Github pull request (PR) containing these changes. By pushing the proposed configuration changes to a new PR, I was able to have a coworker verify the changes are correct before applying. Having the work approved by another member of my team also serves to meet the requirements of the PCI-DSS standard (change controls).
-2. Plan the changes locally to ensure they are as expected. Post plans within the body of the previously mentioned PR, for review and approval by senior team member.
-3. Work on one NAT gateway VM at a time, noting the IP address of the NAT gateway. As previously mentioned, working on one NAT gateway at a time allowed me to minimize disruption ensuring high-availability of our infrastructure.
-4. SSH into another VM on the network and test the connection to the NAT gateway using Linux commands. Because traffic to the NAT gateways was load-balanced, I would be able to confirm all three NAT gateways were receiving traffic.
-5. Delete the NAT gateway VM via Google console.
-6. Apply the Terraform configuration changes, using targets to single out one NAT gateway VM at a time.
-7. Check Cloud-init log files to ensure Chef has finished successfully. Confirming Chef had finished successfully means the new NAT gateway was ready to receive traffic.
-8. SSH to the previously accessed VM to monitor traffic to the NAT gateways. If the IP address of the re-created NAT gateway shows up, it means the NAT gateway was re-created successfully.
-9. Repeat this process for each of the remaining NAT gateways.
+**1.** Edit the existing Terraform configuration to make the desired changes. Create a new Github pull request (PR) containing these changes. By pushing the proposed configuration changes to a new PR, I was able to have a coworker verify the changes are correct before applying. Having the work approved by another member of my team also serves to meet the requirements of the PCI-DSS standard (change controls).
+**2.** Plan the changes locally to ensure they are as expected. Post plans within the body of the previously mentioned PR, for review and approval by senior team member.
+**3.** Work on one NAT gateway VM at a time, noting the IP address of the NAT gateway. As previously mentioned, working on one NAT gateway at a time allowed me to minimize disruption ensuring high-availability of our infrastructure.
+**4.** SSH into another VM on the network and test the connection to the NAT gateway using Linux commands. Because traffic to the NAT gateways was load-balanced, I would be able to confirm all three NAT gateways were receiving traffic.
+**5.** Delete the NAT gateway VM via Google console.
+**6.** Apply the Terraform configuration changes, using targets to single out one NAT gateway VM at a time.
+**7.** Check Cloud-init log files to ensure Chef has finished successfully. Confirming Chef had finished successfully means the new NAT gateway was ready to receive traffic.
+**8.** SSH to the previously accessed VM to monitor traffic to the NAT gateways. If the IP address of the re-created NAT gateway shows up, it means the NAT gateway was re-created successfully.
+**9.** Repeat this process for each of the remaining NAT gateways.
 
 ### Results and Impact
 Here's a breakdown of the final results:
