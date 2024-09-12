@@ -13,7 +13,7 @@ The key objectives of the NAT gateway overhaul were as follows:
 ### Challenges and Solutions
 All the tasks described earlier needed to be executed across three VMs that were configured to function as NAT gateways, playing a crucial role in our infrastructure. Due to their critical nature, it was imperative to minimize downtime while completing these tasks. Moreover, the challenge was compounded by the requirement to carry out the work within a live production environment.
 
-Our infrastructure featured three identical NAT gateways, strategically designed for enhanced availability. This design allowed for a systematic approach: one NAT gateway could be taken offline at a time. With the other two VMs seamlessly handling the traffic that the offline VM would typically manage, concerns regarding disruption were effectively mitigated. This strategy was complemented by regular updates provided to teams that might be affected, enabling them to delay deployments until the specific work in their regions was concluded.
+Our infrastructure featured three identical NAT gateways, strategically designed for enhanced availability. This design allowed for a systematic approach: one NAT gateway could be taken offline at a time. With the other two VMs seamlessly handling the traffic that the offline VM would typically manage, concerns regarding disruption were effectively mitigated. This strategy was complemented by regular updates provided to teams that might be affected, enabling them to delay deployments until the specific work in each region was concluded.
 
 ### Technologies and Tools
 Technologies and Tools used to complete this work are as follows:
